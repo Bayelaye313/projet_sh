@@ -52,7 +52,7 @@ int run_exec(state_t *info, char **arguments)
 
 	path = arguments[0];
 
-	if (!is_cmd(path))
+	if (!is_arg(path))
 	{
 		path = get_absolute_path(path,
 			set_val(&(info->env), "PATH", "")->val);

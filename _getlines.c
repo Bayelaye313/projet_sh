@@ -41,7 +41,7 @@ char *_getlines(int fd)
             if (!temp)
             {
                 free(result);
-                return NULL;
+                return (NULL);
             }
             result = temp;
         }

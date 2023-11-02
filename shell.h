@@ -47,7 +47,7 @@ void process_tokens(state_t *info, char **tokens);
 int is_logical(char **tokens, int index, int *next);
 
 /*---------------get_absolute_path----------------*/
-bool is_cmd(const char *s);
+bool is_arg(const char *s);
 char *get_absolute_path(const char *command, const char *PATH);
 /*shell_handler functions*/
 void free_list(node *head);

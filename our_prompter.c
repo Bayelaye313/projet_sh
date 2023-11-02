@@ -5,5 +5,5 @@
  */
 void prompt(void)
 {
-	myprintf("$");
+	myprintf("Bayelaye$");
 }
