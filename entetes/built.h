@@ -34,6 +34,7 @@ typedef struct state {
     char **command;
     char **tokens;
     node *env;
+    node *aliase
 } state_t;
 
 /**

@@ -23,6 +23,7 @@ bool is_arg(const char *s)
  *
  * Return: a pointer to the path of the command if found, otherwise NULL
  */
+char *get_absolute_path(const char *command, const char *PATH);
 char *get_absolute_path(const char *command, const char *PATH)
 {
     char **dirs, *dirname, *PATHCPY, *arg;

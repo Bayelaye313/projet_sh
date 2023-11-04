@@ -17,6 +17,7 @@ bool exec_builtin(state_t *info, char **arguments)
 		{"setenv", _setenv},
 		{"unsetenv", _unsetenv},
 		{"cd", my_cd},
+		{ "alias", _alias },
 		{ NULL, NULL }
 	};
 

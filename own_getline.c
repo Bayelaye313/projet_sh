@@ -1,6 +1,6 @@
 #include "shell.h"
 #define BUFSIZE 1024
-char *_getlines(int fd)
+char *_getline(int fd)
 {
     static char buffer[BUFSIZE];
     static ssize_t index = 0;

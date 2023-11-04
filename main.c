@@ -55,7 +55,7 @@ int choose_mode(state_t *info, char **argv)
         }
     }
     signal(SIGINT, SIG_IGN);
-    return fd;
+    return (fd);
 }
 
 /**
@@ -83,7 +83,7 @@ int main(int argc, char **argv, char **env)
         while (1)
         {
             prompt();
-            input = _getlines(STDIN_FILENO);
+            input = _getline(STDIN_FILENO);
             if (!input)
             {
                 myprintf("\n");
@@ -94,7 +94,7 @@ int main(int argc, char **argv, char **env)
     }
     else
     {
-        char *input = _getlines(fd);
+        char *input = _getline(fd);
         if (input)
         {
             process_input(info, input);
@@ -103,5 +103,5 @@ int main(int argc, char **argv, char **env)
     }
     status = info->errno_val;
     destroy_sh(info);
-    return status;
+    return (status);
 }

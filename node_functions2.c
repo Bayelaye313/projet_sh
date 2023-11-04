@@ -112,7 +112,7 @@ char **create_arr(node *head)
 		arr_size++;
 		head = head->next;
 	}
-	array = malloc(FRPTR(arr_size));
+	array = malloc(arr_size * sizeof(void *));
 	while (head)
 	{
 		buf_size = 2 + _strlen(head->var) + _strlen(head->val);

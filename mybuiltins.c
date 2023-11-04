@@ -26,7 +26,7 @@ int my_exit(state_t *info, char **args)
 		if (!(arg[i] >= '0' && arg[i] <= '9'))
 		{
 			print_exit_error(info, arg);
-			return (2);
+			return (2); /* Code d'erreur pour une conversion invalide*/
 		}
 		i++;
 	}
