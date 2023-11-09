@@ -16,10 +16,10 @@ char *_strdup(const char *str)
 	l = _strlen(str);
 	s = malloc(l + 1);
 	if (!s)
-    {
-        perror("Error in malloc");
-        exit(EXIT_FAILURE);
-    }
+	{
+		perror("Error in malloc");
+		exit(EXIT_FAILURE);
+	}
 	for (i = 0; i < l; i++)
 		s[i] = str[i];
 	s[i] = '\0';

@@ -35,31 +35,31 @@ void process_integer(FILE *file, int num)
  */
 bool join_char(char **string, size_t *size, char chr, int index)
 {
-    size_t new_size = *size + 1;
+	size_t new_size = *size + 1;
 	/*Increase the size to accommodate the new character*/
 	int i;
-    char *new_string = realloc(*string, new_size + 1);
+	char *new_string = realloc(*string, new_size + 1);
 	/*Allocate memory for the updated string*/
 
-    if (new_string == NULL)
+	if (new_string == NULL)
 	{
-        return (false);
-    }
+		return (false);
+	}
 
-    *string = new_string; /*Update the pointer with the new memory location*/
+	*string = new_string; /*Update the pointer with the new memory location*/
 
-    for (i = *size; i >= index; i--)
+	for (i = *size; i >= index; i--)
 	{
-        (*string)[i + 1] = (*string)[i];
-    }
+		(*string)[i + 1] = (*string)[i];
+	}
 
-    (*string)[index] = chr; /*Insert the new character*/
+	(*string)[index] = chr; /*Insert the new character*/
 
-    (*string)[new_size] = '\0'; /*Ensure the string is null-terminated*/
+	(*string)[new_size] = '\0'; /*Ensure the string is null-terminated*/
 
-    *size = new_size; /*Update the size*/
+	*size = new_size; /*Update the size*/
 
-    return (true); /*Operation succeeded*/
+	return (true); /*Operation succeeded*/
 }
 /**
  * make_format - resolves format specifiers in a string

@@ -27,22 +27,22 @@ void handle_hashtag(char *line)
  */
 char *rm_quotes(char *str)
 {
-    char *result = str;
-    char *write = str;
+	char *result = str;
+	char *write = str;
 
-    if (str == NULL)
-        return NULL;
+	if (str == NULL)
+		return (NULL);
 
-    while (*str)
+	while (*str)
 	{
-        if (*str != '\"')
-            *write++ = *str;
-        str++;
-    }
+		if (*str != '\"')
+			*write++ = *str;
+		str++;
+	}
 
-    *write = '\0';
+	*write = '\0';
 
-    return (result);
+	return (result);
 }
 /**
  * join_int - appends an integer to a string

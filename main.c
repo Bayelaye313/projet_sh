@@ -11,7 +11,7 @@ void process_input(state_t *info, char *input)
 	char **toks;
 
 	info->input = input;
-    handle_hashtag(input);
+	handle_hashtag(input);
 	toks = split_line(input, ";", 0);
 	if (!toks)
 	{
@@ -37,25 +37,25 @@ void process_input(state_t *info, char *input)
  */
 int choose_mode(state_t *info, char **argv)
 {
-    int fd = STDIN_FILENO;
+	int fd = STDIN_FILENO;
 
-    if (argv[1])
-    {
-        fd = open(argv[1], O_RDONLY);
-        if (fd == -1)
-        {
-            if (errno == EACCES)
-                exit(126);
-            if (errno == ENOENT)
-            {
-                print_cant_open(info, argv[1]);
-                destroy_sh(info);
-                exit(127);
-            }
-        }
-    }
-    signal(SIGINT, SIG_IGN);
-    return (fd);
+	if (argv[1])
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+		{
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				print_cant_open(info, argv[1]);
+				destroy_sh(info);
+				exit(127);
+			}
+		}
+	}
+	signal(SIGINT, SIG_IGN);
+	return (fd);
 }
 
 /**
@@ -69,39 +69,41 @@ int choose_mode(state_t *info, char **argv)
  */
 int main(int argc, char **argv, char **env)
 {
-    int status, fd;
-    state_t *info;
+	int status, fd;
+	state_t *info;
 
 	(void)argc;
-    info = init_sh(argv[0], env);
+	info = init_sh(argv[0], env);
 
-    fd = choose_mode(info, argv);
+	fd = choose_mode(info, argv);
 
-    if (isatty(fd))
-    {
-        char *input;
-        while (1)
-        {
-            prompt();
-            input = _getline(STDIN_FILENO);
-            if (!input)
-            {
-                myprintf("\n");
-                break;
-            }
-            process_input(info, input);
-        }
-    }
-    else
-    {
-        char *input = _getline(fd);
-        if (input)
-        {
-            process_input(info, input);
-            free(input);
-        }
-    }
-    status = info->errno_val;
-    destroy_sh(info);
-    return (status);
+	if (isatty(fd))
+	{
+		char *input;
+
+		while (1)
+		{
+			prompt();
+			input = _getline(STDIN_FILENO);
+			if (!input)
+			{
+				myprintf("\n");
+				break;
+			}
+			process_input(info, input);
+		}
+	}
+	else
+	{
+		char *input = _getline(fd);
+
+		if (input)
+		{
+			process_input(info, input);
+			free(input);
+		}
+	}
+	status = info->errno_val;
+	destroy_sh(info);
+	return (status);
 }

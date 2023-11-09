@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * process_string - Traite une chaîne en appliquant le remplacement de variable et en supprimant les guillemets.
+ * process_string - Traite une chaîne en apply le remplacement de variable.
  *
  * @info: Pointeur vers la structure state_t.
- * @str: Chaîne à traiter.
+ * @var: Chaîne à traiter.
  *
  * Return: Pointeur vers la chaîne modifiée.
  */
@@ -35,13 +35,12 @@ char *process_string(state_t *info, char *var)
 
 }
 /**
- * process_tokens - Traite les tokens en appliquant le remplacement de variable et en supprimant les guillemets.
+ * process_tokens - Traite les tokens en apply le remplacement de variable.
  *
  * @info: Pointeur vers la structure state_t.
  * @tokens: Tableau de tokens à traiter.
  *
- * Cette fonction traite les tokens en appliquant la fonction de remplacement et
- * en supprimant les guillemets doubles.
+ * traite les tokens en appliquant la fonction de remplacement et
  */
 void process_tokens(state_t *info, char **tokens)
 {

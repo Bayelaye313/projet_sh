@@ -52,3 +52,12 @@ void my_fputc(char c, FILE *file)
 	(void)file;
 	_putchar(c);
 }
+/**
+ * print_error - Print an error message to stderr.
+ *
+ * @message: Error message string.
+ */
+void print_error(const char *message)
+{
+	write(STDERR_FILENO, message, _strlen(message));
+}

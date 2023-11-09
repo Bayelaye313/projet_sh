@@ -66,26 +66,27 @@ node *join_arr(char **array)
 }
 node *create_env_list(char **env)
 {
-    node *head = NULL;
-    char *var, *val, **arr;
-    int i;
+	node *head = NULL;
+	char *var, *val, **arr;
+	int i;
 
-    for (i = 0; env[i]; i++)
-    {
-        arr = split_line(env[i], "=", 1);
+	for (i = 0; env[i]; i++)
+	{
+		arr = split_line(env[i], "=", 1);
 
-        if (arr[0] != NULL && arr[1] != NULL) {
-            var = _strdup(arr[0]);
-            val = _strdup(arr[1]);
-            add_end(&head, var, val);
-            free(var);
-            free(val);
-        }
+		if (arr[0] != NULL && arr[1] != NULL)
+		{
+			var = _strdup(arr[0]);
+			val = _strdup(arr[1]);
+			add_end(&head, var, val);
+			free(var);
+			free(val);
+		}
 
-        free(arr);
-    }
+		free(arr);
+	}
 
-    return (head);
+	return (head);
 }
 /**
  * create_arr - Creates an array of strings from a linked list.

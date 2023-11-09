@@ -9,14 +9,15 @@
  */
 void free_list(node *head)
 {
-    while (head != NULL)
+	while (head != NULL)
 	{
-        node *next = head->next;
-        free(head->var);
-        free(head->val);
-        free(head);
-        head = next;
-    }
+		node *next = head->next;
+
+		free(head->var);
+		free(head->val);
+		free(head);
+		head = next;
+	}
 }
 
 /**
@@ -29,30 +30,30 @@ void free_list(node *head)
  */
 state_t *init_sh(char *prog, char **env)
 {
-    state_t *info = malloc(sizeof(state_t));
+	state_t *info = malloc(sizeof(state_t));
 
 	if (!info)
 	{
-        perror("Error in malloc");
-        exit(EXIT_FAILURE);
-    }
+		perror("Error in malloc");
+		exit(EXIT_FAILURE);
+	}
 
-    /*Initialize state variables*/
-    info->linum = 1;
-    info->env = create_env_list(env);
-    info->prog = prog;
-    info->errno_val = 0;
-    info->input = NULL;
-    info->lines = NULL;
-    info->tokens = NULL;
-    info->errno_buf = malloc(FRCHAR(12));
-    info->pid_buf = make_format("%d", getpid());
-    info->toks = NULL;
-    info->command = NULL;
-    info->fd = 0;
-    info->buf = NULL;
+	/*Initialize state variables*/
+	info->linum = 1;
+	info->env = create_env_list(env);
+	info->prog = prog;
+	info->errno_val = 0;
+	info->input = NULL;
+	info->lines = NULL;
+	info->tokens = NULL;
+	info->errno_buf = malloc(FRCHAR(12));
+	info->pid_buf = make_format("%d", getpid());
+	info->toks = NULL;
+	info->command = NULL;
+	info->fd = 0;
+	info->buf = NULL;
 
-    return (info);
+	return (info);
 }
 
 /**
@@ -64,24 +65,24 @@ state_t *init_sh(char *prog, char **env)
  */
 void destroy_sh(state_t *info)
 {
-    if (info)
+	if (info)
 	{
-        /*Free allocated memory*/
-        free_list(info->env);
-        free(info->input);
-        free(info->lines);
-        free(info->tokens);
-        free(info->toks);
-        if (info->fd)
+		/*Free allocated memory*/
+		free_list(info->env);
+		free(info->input);
+		free(info->lines);
+		free(info->tokens);
+		free(info->toks);
+		if (info->fd)
 		{
-            close(info->fd);
-        }
-        free(info->pid_buf);
-        free(info->errno_buf);
-        free(info->command);
-        free(info->buf);
-        free(info);
-    }
+			close(info->fd);
+		}
+		free(info->pid_buf);
+		free(info->errno_buf);
+		free(info->command);
+		free(info->buf);
+		free(info);
+	}
 }
 
 /**
@@ -93,21 +94,21 @@ void destroy_sh(state_t *info)
  */
 void free_inf(state_t *info)
 {
-    if (info)
+	if (info)
 	{
-        /*Free allocated memory*/
-        free(info->input);
-        info->input = NULL;
-        if (info->lines)
-        {
-            free(info->lines);
-            info->lines = NULL;
-        }
-        free(info->toks);
-        info->toks = NULL;
-        free(info->tokens);
-        info->tokens = NULL;
-        free(info->command);
-        info->command = NULL;
-    }
+		/*Free allocated memory*/
+		free(info->input);
+		info->input = NULL;
+		if (info->lines)
+		{
+			free(info->lines);
+			info->lines = NULL;
+		}
+		free(info->toks);
+		info->toks = NULL;
+		free(info->tokens);
+		info->tokens = NULL;
+		free(info->command);
+		info->command = NULL;
+	}
 }

@@ -76,15 +76,6 @@ int myprintf(const char *str, ...)
 	return (0);
 }
 /**
- * print_error - Print an error message to stderr.
- *
- * @message: Error message string.
- */
-void print_error(const char *message)
-{
-	write(STDERR_FILENO, message, _strlen(message));
-}
-/**
  * fprinterr - print an error message to stderr
  *
  * @message: the message to print

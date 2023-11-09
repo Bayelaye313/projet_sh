@@ -28,10 +28,12 @@ void runcommand(state_t *info, char **command)
 	}
 }
 /**
- * exec_line - Execute a line of commands.
+ * exec_line - Executes a command specified by a given input line.
  *
- * @info: Pointer to state_t structure.
- * @line: Input line to process and execute.
+ * @info: Pointer to the shell's state_t structure.
+ * @line: String containing the command to be executed.
+ *
+ * Return: 0 on successful execution, or an error code otherwise.
  */
 int exec_line(state_t *info, char *line)
 {

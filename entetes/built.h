@@ -19,6 +19,7 @@
  * @tokens: Array of tokens found in a line/part.
  * @command: Array of tokens gotten from parsing alias.
  * @env: Shell environment variables.
+ * @aliase: shell alias handling
  */
 typedef struct state {
     int linum;
