@@ -27,6 +27,7 @@ extern char **environ;
 /*----------------le prompteur-------------------*/
 void prompt(void);
 char *_getline(int fd);
+int findquote(char *str, char quote);
 /*---------memory gestion----------*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void _memset(char *str, int fill, int n);

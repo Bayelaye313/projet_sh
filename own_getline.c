@@ -12,7 +12,7 @@ char *_getline(int fd)
 	static char buffer[BUFSIZE];
 	static ssize_t index;
 	static ssize_t lecteur;
-	size_t result_index = NULL, size = 1024;
+	size_t result_index = 0, size = 1024;
 	char c, *temp, *result = malloc(size);
 
 	if (!result)

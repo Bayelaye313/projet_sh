@@ -43,6 +43,7 @@ state_t *init_sh(char *prog, char **env)
 	info->env = create_env_list(env);
 	info->prog = prog;
 	info->errno_val = 0;
+	info->aliase = NULL;
 	info->input = NULL;
 	info->lines = NULL;
 	info->tokens = NULL;
@@ -72,6 +73,7 @@ void destroy_sh(state_t *info)
 		free(info->input);
 		free(info->lines);
 		free(info->tokens);
+		free(info->aliase);
 		free(info->toks);
 		if (info->fd)
 		{

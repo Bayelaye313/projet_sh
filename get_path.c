@@ -32,7 +32,12 @@ char *get_absolute_path(const char *command, const char *PATH)
 	int i, j, index;
 
 	arg = NULL;
+	if (PATH == NULL || command == NULL)
+        return (NULL);
+
 	PATHCPY = _strdup(PATH);
+	if (PATHCPY == NULL)
+        return (NULL);
 	dirs = split_line(PATHCPY, ":", 0);
 	if (!dirs)
 	{
@@ -42,6 +47,8 @@ char *get_absolute_path(const char *command, const char *PATH)
 	for (i = 0; dirs[i]; i++)
 	{
 		dirname = dirs[i];
+		if (dirname == NULL)
+            continue;
 		dir = opendir(dirname);
 		if (!dir)
 			continue;
