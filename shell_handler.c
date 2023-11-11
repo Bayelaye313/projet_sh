@@ -43,14 +43,12 @@ state_t *init_sh(char *prog, char **env)
 	info->env = create_env_list(env);
 	info->prog = prog;
 	info->errno_val = 0;
-	info->aliase = NULL;
 	info->input = NULL;
 	info->lines = NULL;
 	info->tokens = NULL;
 	info->errno_buf = malloc(FRCHAR(12));
 	info->pid_buf = make_format("%d", getpid());
 	info->toks = NULL;
-	info->command = NULL;
 	info->fd = 0;
 	info->buf = NULL;
 
@@ -73,7 +71,6 @@ void destroy_sh(state_t *info)
 		free(info->input);
 		free(info->lines);
 		free(info->tokens);
-		free(info->aliase);
 		free(info->toks);
 		if (info->fd)
 		{
@@ -81,7 +78,6 @@ void destroy_sh(state_t *info)
 		}
 		free(info->pid_buf);
 		free(info->errno_buf);
-		free(info->command);
 		free(info->buf);
 		free(info);
 	}
@@ -110,7 +106,5 @@ void free_inf(state_t *info)
 		info->toks = NULL;
 		free(info->tokens);
 		info->tokens = NULL;
-		free(info->command);
-		info->command = NULL;
 	}
 }

@@ -86,4 +86,36 @@ int join_int(char **string, size_t *size, int num, int index)
 	}
 	return (len);
 }
+/**
+ * findquote - finds an unescaped quote in a string
+ * @str: the string to search
+ * @quote: the quote to search for (could be " or ')
+ * Return: the index where the unescaped quote was found, or -1
+ *		if the quote wasn't found.
+ */
+int findquote(char *str, char quote)
+{
+	int i;
+	char a, s, c;
+
+	if (!str || !*str)
+		return (-1);
+
+	c = (quote == '"') ? '"' : '\'';
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		a = str[i];
+		s = str[i + 1];
+
+		if (a == c)
+			return (i);
+		if (s == c && a != '\\')
+			return (i + 1);
+		else if (s)
+			i++;
+	}
+
+	return (-1);
+}
 

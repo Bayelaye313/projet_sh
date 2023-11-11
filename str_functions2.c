@@ -14,27 +14,6 @@ char *_strchr(char *s, char c)
 	return (NULL);
 }
 /**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
- *
- * Return: pointer to destination
- */
-char *_strcpy(char *dest, char *src)
-{
-	int i = 0;
-
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
-/**
  * _atoi - converts a string into an integer
  * Description;'A function'
  * @s: the string to be converted
@@ -62,4 +41,42 @@ int _atoi(char *s)
 		s++;
 	}
 	return (sign * result);
+}
+/**
+ * join_char - appends a character to a string
+ *
+ * @string: a pointer to malloced string
+ * @size: a pointer to an integer holding the size of the string
+ * @chr: the character to add to the string
+ * @index: the index at which to insert the character
+ *
+ * Return: 1 if succeeded, or 0 if it failed
+ */
+bool join_char(char **string, size_t *size, char chr, int index)
+{
+	size_t new_size = *size + 1;
+	/*Increase the size to accommodate the new character*/
+	int i;
+	char *new_string = realloc(*string, new_size + 1);
+	/*Allocate memory for the updated string*/
+
+	if (new_string == NULL)
+	{
+		return (false);
+	}
+
+	*string = new_string; /*Update the pointer with the new memory location*/
+
+	for (i = *size; i >= index; i--)
+	{
+		(*string)[i + 1] = (*string)[i];
+	}
+
+	(*string)[index] = chr; /*Insert the new character*/
+
+	(*string)[new_size] = '\0'; /*Ensure the string is null-terminated*/
+
+	*size = new_size; /*Update the size*/
+
+	return (true); /*Operation succeeded*/
 }

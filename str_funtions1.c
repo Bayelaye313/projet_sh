@@ -49,24 +49,6 @@ int _strlen(const char *s)
 }
 
 /**
- * count_str - count the number of strings in a string array
- *
- * @stri: the string to be counted
- *
- * Return: the number of counted strings
- */
-int count_str(char **stri)
-{
-	int count = 0;
-
-	if (stri == NULL)
-		return (0);
-	while (stri[count] != NULL)
-		count++;
-	return (count);
-}
-
-/**
  * _strcmp - compares two strings
  * @s1: the string to be compared
  * @s2: the second string to be compared
@@ -88,30 +70,4 @@ int _strcmp(const char *s1, const char *s2)
 		i++;
 	}
 	return (j);
-}
-/**
- * *_strcat - it concatenates one string onto another
- * Description:'A function that replicates strncat'
- * @src: the string to be appended
- * @dest: the destination
- * Return: 'dest' if successful
- */
-char *_strcat(char *dest, const char *src)
-{
-	int i, j;
-
-	i = 0;
-
-	while (dest[i] != '\0')
-		i++;
-	j = 0;
-
-	while (src[j] != '\0')
-	{
-		dest[i] = src[j];
-		j++;
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }

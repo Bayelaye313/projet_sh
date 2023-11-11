@@ -4,11 +4,10 @@
 #include <stdlib.h>
 
 /**
- * struct node - this represents a single node in a
- * linked list
+ * struct node - a single node in a linked list
  * @var: the name of the node
  * @val: the value associated with this node
- * @next: a pointer the next node, this would be null if theres no next node.
+ * @next: points to the next node; NULL if there's no next node.
  */
 typedef struct node
 {
@@ -17,13 +16,13 @@ typedef struct node
 	struct node *next;
 } node;
 
-/*nodes functions1*/
+/* Nodes Functions 1 */
 node *add_end(node **head, const char *var, const char *val);
 node *get_node(node *head, const char *var);
 node *set_node(node **head, const char *var, const char *val);
 node *set_val(node **head, const char *var, const char *val);
 
-/*nodes functions2*/
+/* Nodes Functions 2 */
 char **create_arr(node *head);
 bool delete_node(node **head, const char *var);
 node *join_arr(char **array);

@@ -48,16 +48,3 @@ void _memset(char *str, int fill, int n)
 	for (i = 0; i < n; i++)
 		str[i] = fill;
 }
-/**
- * _memcpy - copies part or all of string src to string dest
- * @dest: destination string
- * @src: source string
- * @bytes: number of bytes to copy
- */
-void _memcpy(char *dest, char *src, unsigned int bytes)
-{
-	unsigned int i;
-
-	for (i = 0; i < bytes; i++)
-		dest[i] = src[i];
-}
