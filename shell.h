@@ -58,7 +58,7 @@ void free_inf(state_t *info);
 /* -------------- Errors Handler 1 ------------------ */
 void print_command_not_found(state_t *info, const char *command);
 void print_syntax_error(state_t *info, int op);
-void print_cant_open(state_t *info, const char *path);
+void print_cant_open(const char *prog, int line, const char *path);
 void print_errno(state_t *info, const char *arg, int err);
 
 /* -------------- Errors Handler 2 ------------------ */

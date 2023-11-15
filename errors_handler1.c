@@ -33,15 +33,15 @@ void print_syntax_error(state_t *info, int op)
 /**
  * print_cant_open - Print error message for inability to open file
  *
- * @info: Pointer to the shell's state_t structure
+ * @prog: Name of the program
+ * @line: Line number (usually 0 in your case)
  * @path: The path to the file that couldn't be opened
  */
-void print_cant_open(state_t *info, const char *path)
+void print_cant_open(const char *prog, int line, const char *path)
 {
-	my_fputs(info->prog, STDERR_FILENO);
-	my_fputs(": 0: Can't open ", STDERR_FILENO);
-	my_fputs(path, STDERR_FILENO);
-	_putc('\n', STDERR_FILENO);
+	my_fputs(prog, STDERR_FILENO);
+	my_fputs(": ", STDERR_FILENO);
+	myprintf(": %d: Can't open %s\n", line, path);
 }
 /**
  * print_errno - Print error message with errno
