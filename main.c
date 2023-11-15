@@ -1,4 +1,10 @@
 #include "shell.h"
+void sigint_handler(int signum)
+{
+    (void)signum;
+    myprintf("\n"); /*Imprimer une nouvelle ligne après Ctrl+C*/
+    prompt();       /*Afficher le prompt après Ctrl+C*/
+}
 /**
  * process_input - Processes input and executes corresponding commands.
  *
@@ -25,7 +31,6 @@ void process_input(state_t *info, char *input)
 	}
 	free_inf(info);
 }
-#include "shell.h"
 
 /**
  * choose_mode - Chooses the mode of the shell based on command-line arguments.
@@ -54,7 +59,6 @@ int choose_mode(state_t *info, char **argv)
 			}
 		}
 	}
-	signal(SIGINT, SIG_IGN);
 	return (fd);
 }
 
@@ -74,7 +78,7 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	info = init_sh(argv[0], env);
-
+	signal(SIGINT, sigint_handler);
 	fd = choose_mode(info, argv);
 
 	if (isatty(fd))

@@ -9,50 +9,47 @@
 char *_getline(int fd);
 char *_getline(int fd)
 {
-    static char buffer[BUFSIZE];
-    static ssize_t offset = 0;
-    static ssize_t bytesread = 0;
-    size_t result_offset = 0, size = 1024;
-    char c, *temp, *result = malloc(size);
+	static char buffer[BUFSIZE];
+	static ssize_t index;
+	static ssize_t lecteur;
+	size_t result_index = 0, size = 1024;
+	char c, *temp, *result = malloc(size);
 
-    if (!result)
-        return NULL;
-    
-    while (1)
-    {
-        if (offset >= bytesread)
-        {
-            bytesread = read(fd, buffer, BUFSIZE);
-            offset = 0;
-            if (bytesread <= 0)
-            {
-                result[result_offset] = '\0';
-                break;
-            }
-        }
+	if (!result)
+		return (NULL);
+	while (1)
+	{
+		if (index >= lecteur)
+		{
+			lecteur = read(fd, buffer, BUFSIZE);
+			index = 0;
+			if (lecteur <= 0)
+			{
+				result[result_index] = '\0';
+				break;
+			}
+		}
 
-        c = buffer[offset++];
-        
-        if (c == '\n')
-        {
-            result[result_offset] = '\0';
-            break;
-        }
+		c = buffer[index++];
+		if (c == '\n')
+		{
+			result[result_index] = '\0';
+			break;
+		}
 
-        result[result_offset++] = c;
+		result[result_index++] = c;
 
-        if (result_offset >= size - 1)
-        {
-            size *= 2;
-            temp = realloc(result, size);
-            if (!temp)
-            {
-                free(result);
-                return NULL;
-            }
-            result = temp;
-        }
-    }
-
-    return result;
+		if (result_index >= size - 1)
+		{
+			size *= 2;
+			temp = realloc(result, size);
+			if (!temp)
+			{
+				free(result);
+				return (NULL);
+			}
+			result = temp;
+		}
+	}
+return (result);
 }
