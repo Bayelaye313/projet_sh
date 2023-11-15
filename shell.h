@@ -24,6 +24,7 @@ extern char **environ;
 /* ---------------- Le prompteur ------------------- */
 void prompt(void);
 char *_getline(int fd);
+char *getlines(int fd);
 
 /* --------- Memory Gestion ---------- */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
