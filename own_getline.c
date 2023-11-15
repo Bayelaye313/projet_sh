@@ -1,59 +1,6 @@
 #include "shell.h"
 #define BUFSIZE 1024
 /**
- * getlines - read all lines from stdin.
- *
- * Description: When file is terminal, this function
- * acts like getline(3), reading just one line.
- * When file is a pipe or regular file, all the content is
- * consumed at a go.
- *
- * @fd: the file descriptor
- *
- * Return: a buffer holding all contents of the file.
- * NULL is returned if malloc failed or if EOF is reached.
- */
-char *getlines(int fd)
-{
-	char *buffer;
-	size_t offset, size;
-	int step;
-	ssize_t bytesread;
-	struct stat fdstat;
-
-	fstat(fd, &fdstat);
-	if (fdstat.st_size == 0)
-		size = 1024;
-	else
-		size = fdstat.st_size + 1;
-	buffer = malloc(size);
-	offset = 0;
-	step = size;
-
-	if (!buffer)
-		return (NULL);
-
-	while (true)
-	{
-		bytesread = read(fd, &buffer[offset], step);
-		if (bytesread == 0)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		if (bytesread < step)
-			break;
-		offset += step;
-		buffer = _realloc(buffer, size, size + step);
-		size += step;
-		if (!buffer)
-			return (NULL);
-	}
-	buffer[offset + bytesread - 1] = '\0';
-	return (buffer);
-}
-
-/**
  * _getline - Reads a line of text from a file descriptor.
  * @fd: File descriptor to read from.
  * Return: A dynamically allocated string containing the line read,

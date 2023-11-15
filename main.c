@@ -88,7 +88,7 @@ int main(int argc, char **argv, char **env)
 		while (1)
 		{
 			prompt();
-			input = getlines(STDIN_FILENO);
+			input = _getline(STDIN_FILENO);
 			if (!input)
 			{
 				myprintf("\n");
@@ -99,7 +99,7 @@ int main(int argc, char **argv, char **env)
 	}
 	else
 	{
-		char *input = getlines(fd);
+		char *input = _getline(fd);
 
 		if (input)
 		{
