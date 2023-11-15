@@ -26,7 +26,7 @@ char *_getline(int fd)
 			if (lecteur <= 0)
 			{
 				free(result);
-				return(NULL);
+				return (NULL);
 			}
 		}
 

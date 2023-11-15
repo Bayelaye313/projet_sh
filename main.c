@@ -1,88 +1,18 @@
 #include "shell.h"
+/**
+ * sigint_handler - Handles the SIGINT signal (Ctrl+C).
+ * @signum: The signal number (unused).
+ *
+ * This function is called when the user presses Ctrl+C. It prints a newline
+ * and then prompts for input, effectively handling the interrupt signal.
+ */
 void sigint_handler(int signum)
 {
-    (void)signum;
-    myprintf("\n"); /*Imprimer une nouvelle ligne après Ctrl+C*/
-    prompt();       /*Afficher le prompt après Ctrl+C*/
-}
-/**
- * comment - Identifies a comment in command line
- *
- * @string: the command line string
- * Return: Nothing. It is void
- */
-void comment(char *string)
-{
-	int j;
-
-	if (string == NULL)
-		return;
-	for (j = 0; string[j]; j++)
-		if (string[j] == '#')
-			if (j == 0 || string[j - 1] == ' ')
-			{
-				string[j] = '\0';
-				break;
-			}
+	(void)signum;
+	myprintf("\n"); /* Print a newline after Ctrl+C */
+	prompt();       /* Display the prompt after Ctrl+C */
 }
 
-/**
- * process_input - Processes input and executes corresponding commands.
- *
- * @info: Pointer to state_t_t structure.
- * @input: Input string to process.
- */
-/*void process_input(state_t_t *info, char *input)
-{
-	int l;
-	char **toks;
-
-	info->input = input;
-	handle_hashtag(input);
-	toks = split_line_line(input, ";", 0);
-	if (!toks)
-	{
-		free_inf(info);
-		return;
-	}
-	info->toks = toks;
-	for (l = 0; toks[l]; l++)
-	{
-		exec_line(info, toks[l]);
-	}
-	free_inf(info);
-}*/
-
-/**
- * choose_mode - Chooses the mode of the shell based on command-line arguments.
- *
- * @info: Pointer to the shell's state_t_t.
- * @argv: Array of command-line argument strings.
- *
- * Return: The file descriptor for input.
- */
-/*int choose_mode(state_t_t *info, char **argv)
-{
-	int fd = STDIN_FILENO;
-
-	if (argv[1])
-	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-		{
-			if (errno == EACCES)
-				exit(126);
-			if (errno == ENOENT)
-			{
-				print_cant_open(info, argv[1]);
-				destroy_sh(info);
-				exit(127);
-			}
-		}
-	}
-	return (fd);
-}
-*/
 /**
  * open_file - used by the main function to open a file
  *
@@ -93,28 +23,28 @@ void comment(char *string)
  */
 int open_file(state_t *info, char *path)
 {
-    int fd;
+	int fd;
 
-    fd = open(path, O_RDONLY);
+	fd = open(path, O_RDONLY);
 
-    if (fd == -1)
-    {
-        print_cant_open(info->prog, 0, path);
-        destroy_sh(info);
-        exit(127);
-    }
-    info->fd = fd;
-    return (fd);
+	if (fd == -1)
+	{
+		print_cant_open(info->prog, 0, path);
+		destroy_sh(info);
+		exit(127);
+	}
+	info->fd = fd;
+	return (fd);
 }
 
 /**
- * interactive - runs the shell in interactive mode
+ * interargctive - runs the shell in interargctive mode
  *
  * @info: the shell's state_t
  *
  * Return: always 0
  */
-int interactive(state_t *info)
+int interargctive(state_t *info)
 {
 	int l;
 	char *input;
@@ -148,7 +78,7 @@ int interactive(state_t *info)
 }
 
 /**
- * non_interactive - run shell in non-interactive mode
+ * non_interargctive - run shell in non-interargctive mode
  * all commands would be read from a file.
  *
  * @info: shell's state_t
@@ -156,7 +86,7 @@ int interactive(state_t *info)
  *
  * Return: always 0
  */
-int non_interactive(state_t *info, int fd)
+int non_interargctive(state_t *info, int fd)
 {
 	int l, i;
 	char *input, **lines, **toks;
@@ -198,23 +128,23 @@ int non_interactive(state_t *info, int fd)
  *
  * Return: The exit status of the shell program.
  */
-int main(int ac, char **av, char **env)
+int main(int argc, char **argv, char **env)
 {
 	int status;
 	state_t *info;
 	int fd;
 
-	(void)ac;
+	(void)argc;
 	fd = STDIN_FILENO;
-	signal(SIGINT, SIG_IGN);
-	info = init_sh(av[0], env);
+	signal(SIGINT, sigint_handler);
+	info = init_sh(argv[0], env);
 
-	if (av[1])
-		fd = open_file(info, av[1]);
+	if (argv[1])
+		fd = open_file(info, argv[1]);
 	if (isatty(fd))
-		interactive(info);
+		interargctive(info);
 	else
-		non_interactive(info, fd);
+		non_interargctive(info, fd);
 	status = info->errno_val;
 	destroy_sh(info);
 	return (status);

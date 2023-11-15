@@ -73,3 +73,23 @@ int _strcmp(const char *s1, const char *s2)
 	}
 	return (j);
 }
+/**
+ * comment - Identifies a comment in command line
+ *
+ * @string: the command line string
+ * Return: Nothing. It is void
+ */
+void comment(char *string)
+{
+	int j;
+
+	if (string == NULL)
+		return;
+	for (j = 0; string[j]; j++)
+		if (string[j] == '#')
+			if (j == 0 || string[j - 1] == ' ')
+			{
+				string[j] = '\0';
+				break;
+			}
+}

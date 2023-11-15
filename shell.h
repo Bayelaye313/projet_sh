@@ -89,6 +89,7 @@ char *_strdup(const char *str);
 int _strcmp(const char *s1, const char *s2);
 int _atoi(char *s);
 bool join_char(char **string, size_t *size, char chr, int index);
+void comment(char *string);
 
 /* -------------- Useful Functions -------------- */
 void handle_hashtag(char *line);
