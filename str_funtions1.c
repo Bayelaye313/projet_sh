@@ -10,9 +10,10 @@ char *_strdup(const char *str)
 {
 	char *s;
 	unsigned int i = 0, l;
-
+	/*Vérifie si la chaîne source est NULL*/
 	if (str == NULL)
 		return (NULL);
+	/*Calcule la longueur de la chaîne source*/
 	l = _strlen(str);
 	s = malloc(l + 1);
 	if (!s)
@@ -20,6 +21,7 @@ char *_strdup(const char *str)
 		perror("Error in malloc");
 		exit(EXIT_FAILURE);
 	}
+	/*Copie la chaîne source dans la nouvelle chaîne*/
 	for (i = 0; i < l; i++)
 		s[i] = str[i];
 	s[i] = '\0';

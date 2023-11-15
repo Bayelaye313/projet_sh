@@ -25,8 +25,8 @@ char *_getline(int fd)
 			index = 0;
 			if (lecteur <= 0)
 			{
-				result[result_index] = '\0';
-				break;
+				free(result);
+				return(NULL);
 			}
 		}
 
