@@ -100,6 +100,6 @@ char *make_format(const char *fm, ...);
 void process_integer(FILE *file, int num);
 
 /* -------------- Tokenization ------------------ */
-char **split_line(char *input, char *delimiter, unsigned int max);
+char **split_line(char *input, char *delimiters, unsigned int max_splits);
 
 #endif
