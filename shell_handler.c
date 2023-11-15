@@ -40,7 +40,7 @@ state_t *init_sh(char *prog, char **env)
 
 	/*Initialize state variables*/
 	info->linum = 1;
-	info->env = create_env_list(env);
+	info->env = join_arr(env);
 	info->prog = prog;
 	info->errno_val = 0;
 	info->input = NULL;
