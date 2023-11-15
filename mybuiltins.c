@@ -79,6 +79,12 @@ int cd_illegal_option(state_t *info, char option)
 	print_cd_illegal_option(info, option);
 	return (2);
 }
+int is_valid_directory(const char *path)
+{
+    struct stat dir;
+    return stat(path, &dir) == 0 && S_ISDIR(dir.st_mode) && dir.st_mode & S_IXUSR;
+}
+
 /**
  * my_cd - Change the current directory
  *
@@ -89,42 +95,43 @@ int cd_illegal_option(state_t *info, char option)
  */
 int my_cd(state_t *info, char **args)
 {
-	char *path = args[0];
-	struct stat dir;
-	char *pwd = getenv("PWD");
-	char *home = getenv("HOME");
-	char *oldpwd = getenv("OLDPWD");
-	char *new_pwd;
+    char *path = args[0];
+    char *pwd = getenv("PWD");
+    char *home = getenv("HOME");
+    char *oldpwd = getenv("OLDPWD");
+    char *new_pwd;
 
-	if (!path || !_strcmp(path, "~"))
-	{
-		if (!home)
-			return (0);
-		path = home;
-	}
-	else if (path && !_strcmp(path, "-"))
-	{
-		path = oldpwd;
-		myprintf(path);
-		myprintf("\n");
-		return (cd_to_previous(info));
-	}
-	else if (path && path[0] == '-')
-	{
-		return (cd_illegal_option(info, path[1]));
-	}
-	if (stat(path, &dir) == 0 && S_ISDIR(dir.st_mode)
-			&& dir.st_mode & S_IXUSR)
-	{
-		if (chdir(path) == 0)
-		{
-			setenv("OLDPWD", pwd ? pwd : "", 1);
-			new_pwd = getcwd(NULL, 0);
-			setenv("PWD", getcwd(NULL, 0), 1);
-			free(new_pwd);
-			return (0);
-		}
-	}
-	print_cd_cant_change(info, path);
-	return (2);
+    if (!path || !_strcmp(path, "~"))
+    {
+        if (!home)
+            return (0);
+        path = home;
+    }
+    else if (path && !_strcmp(path, "-"))
+    {
+        path = oldpwd;
+        myprintf(path);
+        myprintf("\n");
+        return (cd_to_previous(info));
+    }
+    else if (path && path[0] == '-')
+    {
+        return (cd_illegal_option(info, path[1]));
+    }
+
+    if (is_valid_directory(path))
+    {
+        if (chdir(path) == 0)
+        {
+            setenv("OLDPWD", pwd ? pwd : "", 1);
+            new_pwd = getcwd(NULL, 0);
+            setenv("PWD", new_pwd, 1);
+            free(new_pwd);
+            return (0);
+        }
+    }
+
+    print_cd_cant_change(info, path);
+    return (2);
 }
+
