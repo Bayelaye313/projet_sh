@@ -43,7 +43,7 @@ int my_exit(state_t *info, char **args)
  */
 int cd_to_home(state_t *info __attribute__((unused)))
 {
-	char *home = getenv("HOME");
+	char *home = get_node(info->env, "HOME")->val;
 
 	if (!home)
 		return (0);
@@ -58,7 +58,7 @@ int cd_to_home(state_t *info __attribute__((unused)))
  */
 int cd_to_previous(state_t *info __attribute__((unused)))
 {
-	char *oldpwd = getenv("OLDPWD");
+	char *oldpwd = get_node(info->env, "OLDPWD")->val;
 
 	if (!oldpwd)
 		return (1);
@@ -96,9 +96,9 @@ int is_valid_directory(const char *path)
 int my_cd(state_t *info, char **args)
 {
     char *path = args[0];
-    char *pwd = getenv("PWD");
-    char *home = getenv("HOME");
-    char *oldpwd = getenv("OLDPWD");
+    char *pwd = get_node(info->env, "PWD")->val;
+    char *home = get_node(info->env, "HOME")->val;
+    char *oldpwd = get_node(info->env, "OLDPWD")->val;
     char *new_pwd;
 
     if (!path || !_strcmp(path, "~"))
@@ -123,9 +123,9 @@ int my_cd(state_t *info, char **args)
     {
         if (chdir(path) == 0)
         {
-            setenv("OLDPWD", pwd ? pwd : "", 1);
+            set_node(&(info->env), "OLDPWD", pwd);
             new_pwd = getcwd(NULL, 0);
-            setenv("PWD", new_pwd, 1);
+            set_node(&(info->env), "PWD", new_pwd);
             free(new_pwd);
             return (0);
         }
