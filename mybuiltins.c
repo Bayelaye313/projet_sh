@@ -57,8 +57,8 @@ int is_valid_directory(const char *path)
 {
 	struct stat dir;
 
-	return (stat(path, &dir) == 0 && S_ISDIR(dir.st_mode) &&
-						dir.st_mode & S_IXUSR);
+return (stat(path, &dir) == 0 &&
+			S_ISDIR(dir.st_mode) && dir.st_mode & S_IXUSR);
 }
 
 /**
@@ -72,33 +72,34 @@ int is_valid_directory(const char *path)
 int my_cd(state_t *info, char **args)
 {
 	char *path = args[0];
-	struct stat dir;
-	node *pwd = get_node(info->env, "PWD");
-	node *home = get_node(info->env, "HOME");
-	node *oldpwd = get_node(info->env, "OLDPWD");
+	char *pwd = get_node(info->env, "PWD")->val;
+	char *home = get_node(info->env, "HOME")->val;
+	char *oldpwd = get_node(info->env, "OLDPWD")->val;
 	char *new_pwd;
 
 	if (!path || !_strcmp(path, "~"))
 	{
 		if (!home)
 			return (0);
-		path = home->val;
+		path = home;
 	}
 	else if (path && !_strcmp(path, "-"))
 	{
-		path = oldpwd ? oldpwd->val : "";
-		myprintf("%s\n", path);
+		path = oldpwd;
+		myprintf(path);
+		myprintf("\n");
+		return (cd_to_previous(info));
 	}
 	else if (path && path[0] == '-')
 	{
 		return (cd_illegal_option(info, path[1]));
 	}
 
-	if (stat(path, &dir) == 0 && S_ISDIR(dir.st_mode) && dir.st_mode & S_IXUSR)
+	if (is_valid_directory(path))
 	{
 		if (chdir(path) == 0)
 		{
-			set_node(&(info->env), "OLDPWD", pwd ? pwd->val : "");
+			set_node(&(info->env), "OLDPWD", pwd);
 			new_pwd = getcwd(NULL, 0);
 			set_node(&(info->env), "PWD", new_pwd);
 			free(new_pwd);
@@ -109,3 +110,4 @@ int my_cd(state_t *info, char **args)
 	print_cd_cant_change(info, path);
 	return (2);
 }
+
