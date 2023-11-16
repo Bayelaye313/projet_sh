@@ -29,6 +29,7 @@ char *getlines(int fd);
 /* --------- Memory Gestion ---------- */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void _memset(char *str, int fill, int n);
+char *_memcpy(char *dest, char *src, unsigned int n);
 
 /* ---------------- Execute Program ------------------- */
 /* ******* Process ********/
@@ -90,6 +91,8 @@ int _strcmp(const char *s1, const char *s2);
 int _atoi(char *s);
 bool join_char(char **string, size_t *size, char chr, int index);
 void comment(char *string);
+char *_strncat(char *dest, char *src, int n);
+int _isalpha(int c);
 
 /* -------------- Useful Functions -------------- */
 void handle_hashtag(char *line);

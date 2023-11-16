@@ -3,21 +3,22 @@
 #define PATH "PATH"
 
 /**
- * my_env - Prints out all shell environment variables
+ * my_env - Print all shell environment variables
  *
  * @info: Pointer to the shell's state_t structure
- * @args: Array of command line arguments (unused)
+ * @args: Unused array of command line arguments
  *
  * Return: Always returns 0
  */
 int my_env(state_t *info, char **args)
 {
-	/*Using environ to access environment variables*/
+	/* Use environ to access environment variables */
 	char **env = environ;
 
 	(void)info;
 	(void)args;
-	/*Loop through the environment variables and print them*/
+
+	/* Loop through the environment variables and print them */
 	while (*env != NULL)
 	{
 		myprintf("%s\n", *env);
@@ -25,6 +26,7 @@ int my_env(state_t *info, char **args)
 	}
 	return (0);
 }
+
 /**
  * _setenv - Set or modify an environment variable
  *
@@ -36,31 +38,42 @@ int my_env(state_t *info, char **args)
  */
 int _setenv(state_t *info, char **args)
 {
-	switch (args[0] ? 1 : 0)
+	char *name, *value;
+	node *env_node;
+
+	if (args[1] == NULL || args[2] == NULL || args[3] != NULL)
 	{
-		case 0:
-			print_error("Usage: setenv VARIABLE VALUE\n");
-			return (1);
-		case 1:
-			break;
+		print_error("setenv: Incorrect usage. Use setenv VARIABLE VALUE\n");
+		return (1);
 	}
-	switch (args[1] ? 1 : 0)
+
+	if (!_isalpha(args[1][0]))
 	{
-		case 0:
-			print_error("setenv: VALUE not supplied\n");
-			return (2);
-		case 1:
-			break;
+		print_error("setenv: Variable name must start with a letter\n");
+		return (2);
 	}
-	if (!_strcmp(args[1], PATH) && !args[1][0])
-		return (0);
-	if (!set_node(&(info->env), args[0], args[1]))
+
+	name = args[1];
+	value = args[2];
+
+	/*Check if the variable already exists*/
+	env_node = get_node(info->env, name);
+
+	if (env_node)
 	{
-		perror("setenv");
-		return (3);
+		/*Variable exists, update its value*/
+		free(env_node->val);
+		env_node->val = _strdup(value);
 	}
+	else
+	{
+		/*Variable does not exist, create a new one*/
+		set_node(&(info->env), name, value);
+	}
+
 	return (0);
 }
+
 /**
  * _unsetenv - Unset an environment variable
  *
@@ -68,32 +81,44 @@ int _setenv(state_t *info, char **args)
  * @args: Array of command line arguments
  *
  * Return: 0 on success, 1 if VARIABLE is missing,
- * 2 if VARIABLE does not exist,
- * 3 if an error occurs during node deletion
+ *         2 if VARIABLE does not exist,
+ *         3 if an error occurs during node deletion
  */
 int _unsetenv(state_t *info, char **args)
 {
-	const char *target_var;
 	node *env_node;
+	const char *target_var;
 
-	if (!args[0])
+	if (args[0] == NULL)
 	{
-		print_error("unsetenv: VARIABLE missing\n");
+		print_error("unsetenv: Variable name missing\n");
 		return (1);
 	}
+
 	target_var = args[0];
+
+	/*Check if the variable is a protected variable (HOME, PATH)*/
 	if (!_strcmp(target_var, HOME) || !_strcmp(target_var, PATH))
-		return (0);
+	{
+		print_error("unsetenv: Cannot unset protected variable\n");
+		return (1);
+	}
+
+	/*Check if the variable exists*/
 	env_node = get_node(info->env, target_var);
+
 	if (!env_node)
 	{
-		print_unsetenv_error(target_var);
+		print_error("unsetenv: Variable does not exist\n");
 		return (2);
 	}
+
+	/*Delete the variable*/
 	if (!delete_node(&(info->env), target_var))
 	{
 		perror("unsetenv");
 		return (3);
 	}
+
 	return (0);
 }

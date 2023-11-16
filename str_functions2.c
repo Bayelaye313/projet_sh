@@ -14,33 +14,29 @@ char *_strchr(char *s, char c)
 	return (NULL);
 }
 /**
- * _atoi - converts a string into an integer
- * Description;'A function'
- * @s: the string to be converted
- * Return: the integer converted from the string
+ * _atoi - convert to a int
+ * @s:string
+ * Return:int
  */
 int _atoi(char *s)
 {
-	int sign = 1;
-	int result = 0;
+int i, j, n, x;
 
-	while (*s)
+	i = n = 0;
+	x = 1;
+	while ((s[i] < '0' || s[i] > '9') && (s[i] != '\0'))
 	{
-		if (*s == '-')
-		{
-			sign *= -1;
-		}
-		else if (*s >= '0' && *s <= '9')
-		{
-			result = result * 10 + (*s - '0');
-		}
-		else if (result > 0)
-		{
-			break;
-		}
-		s++;
+		if (s[i] == '-')
+			x *= -1;
+		i++;
 	}
-	return (sign * result);
+	j = i;
+	while ((s[j] >= '0') && (s[j] <= '9'))
+	{
+		n = (n * 10) + x * ((s[j]) - '0');
+		j++;
+	}
+	return (n);
 }
 /**
  * join_char - appends a character to a string
@@ -80,3 +76,36 @@ bool join_char(char **string, size_t *size, char chr, int index)
 
 	return (true); /*Operation succeeded*/
 }
+/**
+ * findquote - finds an unescaped quote in a string
+ * @str: the string to search
+ * @quote: the quote to search for (could be " or ')
+ * Return: the index where the unescaped quote was found, or -1
+ *		if the quote wasn't found.
+ */
+int findquote(char *str, char quote)
+{
+	int i;
+	char a, s, c;
+
+	if (!str || !*str)
+		return (-1);
+
+	c = (quote == '"') ? '"' : '\'';
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		a = str[i];
+		s = str[i + 1];
+
+		if (a == c)
+			return (i);
+		if (s == c && a != '\\')
+			return (i + 1);
+		else if (s)
+			i++;
+	}
+
+	return (-1);
+}
+

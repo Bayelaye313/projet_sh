@@ -34,8 +34,9 @@ void print_unsetenv_error(const char *target_var)
 void print_cd_illegal_option(state_t *info, char option)
 {
 	my_fprintf(stderr, "%s: %d: cd: Illegal option -%c\n",
-			info->prog, info->linum, option);
+				info->prog, info->linum, option);
 }
+
 /**
  * print_cd_cant_change - Print error message for failed directory change
  *
@@ -44,8 +45,8 @@ void print_cd_illegal_option(state_t *info, char option)
  */
 void print_cd_cant_change(state_t *info, const char *path)
 {
-	my_fprintf(stderr, "%s: %d: cd: can't cd to %s\n",
-			info->prog, info->linum, path);
+	my_fprintf(stderr, "%s: %d: cd: Unable to change to %s: %s\n",
+				info->prog, info->linum, path, strerror(errno));
 }
 /**
  * print_permission_denied - Print a "Permission denied" mesge to stderr.

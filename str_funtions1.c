@@ -36,18 +36,17 @@ char *_strdup(const char *str)
  */
 int _strlen(const char *s)
 {
-	int i, lenght;
+	int i;
 
 	if (s == NULL)
 		return (-1);
 
-	lenght = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		lenght++;
+		continue;
 	}
-	return (lenght);
+	return (i);
 }
 
 /**
@@ -92,4 +91,30 @@ void comment(char *string)
 				string[j] = '\0';
 				break;
 			}
+}
+/**
+ * _strncat - concatenates one string (number of byte given)
+ * to another
+ * @dest: where to concatenate
+ * @src: string to concatenate
+ * @n: how many bytes to
+ * Return: dest
+ */
+
+char *_strncat(char *dest, char *src, int n)
+{
+	int i, j;
+
+	for (i = 0; dest[i] != '\0'; i++)
+	{
+	}
+	j = 0;
+	while (j < n && src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
